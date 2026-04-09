@@ -46,8 +46,6 @@ const tools = [
       </router-link>
       <nav class="hidden md:flex flex-1 justify-center items-center gap-6 text-base text-gray-600">
         <router-link to="/" class="hover:text-blue-600">首页</router-link>
-        <router-link to="/tools/bid-calculator" class="hover:text-blue-600">功能区</router-link>
-        <a href="#" class="hover:text-blue-600">提需求</a>
         <router-link to="/about" class="hover:text-blue-600">关于我们</router-link>
       </nav>
       <div class="shrink-0">
