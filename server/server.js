@@ -219,14 +219,79 @@ app.post('/api/process', upload.array('files'), async (req, res) => {
   }
 });
 
+// ============ PDF 转链接 ============
+
+const UPLOADS_DIR = path.join(__dirname, 'uploads');
+const PDF_META_FILE = path.join(__dirname, 'pdf-files.json');
+if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR);
+
+function loadPdfMeta() {
+  try { return JSON.parse(fs.readFileSync(PDF_META_FILE, 'utf8')); } catch { return []; }
+}
+function savePdfMeta(data) {
+  fs.writeFileSync(PDF_META_FILE, JSON.stringify(data, null, 2), 'utf8');
+}
+
+const pdfUpload = multer({
+  storage: multer.diskStorage({
+    destination: UPLOADS_DIR,
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname);
+      const name = crypto.randomUUID() + ext;
+      cb(null, name);
+    },
+  }),
+  limits: { fileSize: 20 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    cb(null, file.mimetype === 'application/pdf');
+  },
+});
+
+// 上传 PDF
+app.post('/api/pdf-upload', pdfUpload.array('files', 20), (req, res) => {
+  if (!req.files?.length) return res.status(400).json({ error: '请上传PDF文件' });
+  const meta = loadPdfMeta();
+  const newFiles = req.files.map(f => ({
+    filename: f.filename,
+    originalName: Buffer.from(f.originalname, 'latin1').toString('utf8'),
+    size: f.size,
+    uploadedAt: new Date().toISOString(),
+  }));
+  meta.unshift(...newFiles);
+  savePdfMeta(meta);
+  res.json({ files: newFiles });
+});
+
+// 获取文件列表
+app.get('/api/pdf-files', (req, res) => {
+  res.json({ files: loadPdfMeta() });
+});
+
+// 删除文件
+app.delete('/api/pdf-files/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(UPLOADS_DIR, filename);
+  if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+  const meta = loadPdfMeta().filter(f => f.filename !== filename);
+  savePdfMeta(meta);
+  res.json({ success: true });
+});
+
+// 提供上传文件的静态访问
+app.use('/uploads', express.static(UPLOADS_DIR));
+
 // ============ 托管前端静态文件 ============
 
 const distPath = path.join(__dirname, '..', 'app', 'dist');
 if (fs.existsSync(distPath)) {
   app.use(express.static(distPath));
   // Vue Router history 模式：所有非 API 路由返回 index.html
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
+  app.use((req, res, next) => {
+    if (req.method === 'GET' && !req.path.startsWith('/api/') && !req.path.startsWith('/uploads/')) {
+      res.sendFile(path.join(distPath, 'index.html'));
+    } else {
+      next();
+    }
   });
 }
 
