@@ -51,17 +51,27 @@ async function loadDevices() {
 
 async function handleApprove(device) {
   loading.value = true
-  await approveDevice(device.id, adminKey.value)
-  await loadDevices()
-  loading.value = false
+  try {
+    await approveDevice(device.id, adminKey.value)
+    await loadDevices()
+  } catch (e) {
+    error.value = '审批失败：' + e.message
+  } finally {
+    loading.value = false
+  }
 }
 
 async function handleRemove(device) {
   if (!confirm(`确定移除设备「${device.name}」？该设备将无法再访问系统。`)) return
   loading.value = true
-  await removeDevice(device.id, adminKey.value)
-  await loadDevices()
-  loading.value = false
+  try {
+    await removeDevice(device.id, adminKey.value)
+    await loadDevices()
+  } catch (e) {
+    error.value = '移除失败：' + e.message
+  } finally {
+    loading.value = false
+  }
 }
 
 const pendingDevices = () => devices.value.filter(d => d.status === 'pending')
