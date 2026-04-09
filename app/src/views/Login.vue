@@ -5,7 +5,6 @@ import { authStatus, checkDevice, registerDevice } from '../auth'
 
 const router = useRouter()
 const code = ref('')
-const deviceName = ref('')
 const error = ref('')
 const loading = ref(false)
 let pollTimer = null
@@ -40,7 +39,7 @@ async function handleSubmit() {
     return
   }
   loading.value = true
-  const result = await registerDevice(code.value.trim(), deviceName.value.trim() || undefined)
+  const result = await registerDevice(code.value.trim())
   loading.value = false
 
   if (!result.success) {
@@ -84,14 +83,6 @@ async function handleSubmit() {
 
         <!-- 输入访问码 -->
         <form v-else @submit.prevent="handleSubmit" class="space-y-4">
-          <div>
-            <input
-              v-model="deviceName"
-              type="text"
-              placeholder="你的名字（方便管理员识别）"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center"
-            />
-          </div>
           <div>
             <input
               v-model="code"

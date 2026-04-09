@@ -15,7 +15,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 // ============ 设备认证系统 ============
 
 const DEVICES_FILE = path.join(__dirname, 'devices.json');
-const ACCESS_CODE = 'amzhelper2024';   // 公司访问码，给同事用的
+const ACCESS_CODE = 'KL2026';   // 公司访问码，给同事用的
 const ADMIN_KEY = 'admin888';          // 管理员密钥，只有你自己知道
 
 function loadDevices() {
