@@ -34,27 +34,35 @@ function saveDevices(devices) {
 app.post('/api/auth/register', (req, res) => {
   const { code, deviceId, name } = req.body;
   if (!code || !deviceId) return res.status(400).json({ error: '参数缺失' });
-  if (code !== ACCESS_CODE) return res.status(403).json({ error: '访问码错误' });
+  if (code !== ACCESS_CODE && code !== ADMIN_KEY) return res.status(403).json({ error: '访问码错误' });
 
+  const isAdmin = code === ADMIN_KEY;
   const devices = loadDevices();
   const existing = devices.find(d => d.deviceId === deviceId);
   if (existing) {
+    // 管理员密钥可以直接把已有设备升级为已审批
+    if (isAdmin && existing.status !== 'approved') {
+      existing.status = 'approved';
+      existing.approvedAt = new Date().toISOString();
+      saveDevices(devices);
+    }
     return res.json({ status: existing.status, message: existing.status === 'approved' ? '已授权' : '等待管理员审批' });
   }
 
-  // 新设备，加入待审批列表
+  // 新设备：管理员密钥直接审批，普通访问码需等待审批
   const device = {
     id: crypto.randomUUID(),
     deviceId,
     name: name || '未命名设备',
-    status: 'pending',
+    status: isAdmin ? 'approved' : 'pending',
     createdAt: new Date().toISOString(),
+    approvedAt: isAdmin ? new Date().toISOString() : undefined,
     ip: req.ip || req.headers['x-forwarded-for'] || '',
     userAgent: req.headers['user-agent'] || '',
   };
   devices.push(device);
   saveDevices(devices);
-  res.json({ status: 'pending', message: '设备已登记，请等待管理员审批' });
+  res.json({ status: device.status, message: isAdmin ? '管理员已授权' : '设备已登记，请等待管理员审批' });
 });
 
 // 检查设备状态

@@ -14,6 +14,7 @@ import TextCaseConverter from '../views/TextCaseConverter.vue'
 import SensitiveWordChecker from '../views/SensitiveWordChecker.vue'
 import BulkAdUpload from '../views/BulkAdUpload.vue'
 import QuickLinks from '../views/QuickLinks.vue'
+import PdfToLink from '../views/PdfToLink.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -31,6 +32,7 @@ const router = createRouter({
     { path: '/tools/sensitive-word-checker', component: SensitiveWordChecker },
     { path: '/tools/bulk-ad-upload', component: BulkAdUpload },
     { path: '/tools/quick-links', component: QuickLinks },
+    { path: '/tools/pdf-to-link', component: PdfToLink },
     { path: '/about', component: About },
   ],
 })

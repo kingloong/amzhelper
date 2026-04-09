@@ -26,6 +26,7 @@ const tools = [
   { name: '敏感词检查', path: '/tools/sensitive-word-checker', icon: '🛡️', active: true },
   { name: '批量广告上传', path: '/tools/bulk-ad-upload', icon: '📢', active: true },
   { name: '常用工具跳转', path: '/tools/quick-links', icon: '🔗', active: true },
+  { name: 'PDF转链接', path: '/tools/pdf-to-link', icon: '📎', active: true },
   { name: '利润计算器', path: '', icon: '💹', active: false },
 ]
 </script>
