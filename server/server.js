@@ -12,9 +12,13 @@ app.use(cors());
 app.use(express.json());
 const upload = multer({ storage: multer.memoryStorage() });
 
+// ============ 持久化数据目录 ============
+// Zeabur 挂载了 /data 持久硬盘，本地开发用 server 目录
+const DATA_DIR = fs.existsSync('/data') ? '/data' : __dirname;
+
 // ============ 设备认证系统 ============
 
-const DEVICES_FILE = path.join(__dirname, 'devices.json');
+const DEVICES_FILE = path.join(DATA_DIR, 'devices.json');
 const ACCESS_CODE = 'KL2026';   // 公司访问码，给同事用的
 const ADMIN_KEY = 'admin888';          // 管理员密钥，只有你自己知道
 
@@ -229,8 +233,8 @@ app.post('/api/process', upload.array('files'), async (req, res) => {
 
 // ============ PDF 转链接 ============
 
-const UPLOADS_DIR = path.join(__dirname, 'uploads');
-const PDF_META_FILE = path.join(__dirname, 'pdf-files.json');
+const UPLOADS_DIR = path.join(DATA_DIR, 'uploads');
+const PDF_META_FILE = path.join(DATA_DIR, 'pdf-files.json');
 if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR);
 
 function loadPdfMeta() {
