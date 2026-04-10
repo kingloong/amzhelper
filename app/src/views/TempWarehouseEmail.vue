@@ -148,6 +148,16 @@ function clearData() {
   expandedRow.value = null
 }
 
+const copiedRow = ref(null)
+
+function copyEmail(r) {
+  const text = generateFullEmail(r.asin, r.title, r.quantity, r.location)
+  navigator.clipboard.writeText(text).then(() => {
+    copiedRow.value = r
+    setTimeout(() => { copiedRow.value = null }, 2000)
+  })
+}
+
 const totalQuantity = computed(() => results.value.reduce((sum, r) => sum + r.quantity, 0))
 </script>
 
@@ -213,6 +223,22 @@ const totalQuantity = computed(() => results.value.reduce((sum, r) => sum + r.qu
       </div>
     </div>
 
+    <!-- 操作按钮 -->
+    <div v-if="results.length" class="flex items-center gap-4 mb-6">
+      <button
+        @click="exportExcel"
+        class="bg-green-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-green-700 transition"
+      >
+        📥 导出Excel
+      </button>
+      <button
+        @click="clearData"
+        class="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg text-lg hover:bg-gray-300 transition"
+      >
+        清除数据
+      </button>
+    </div>
+
     <!-- 结果表格 -->
     <div v-if="results.length" class="bg-white rounded-lg shadow mb-6 overflow-x-auto">
       <div class="p-6 pb-0 flex items-center justify-between">
@@ -250,28 +276,21 @@ const totalQuantity = computed(() => results.value.reduce((sum, r) => sum + r.qu
             </tr>
             <tr v-if="expandedRow === i">
               <td colspan="7" class="bg-gray-50 px-6 py-4 border-b">
+                <div class="flex justify-end mb-2">
+                  <button
+                    @click="copyEmail(r)"
+                    :class="[
+                      'px-4 py-1.5 rounded text-sm transition',
+                      copiedRow === r ? 'bg-green-500 text-white' : 'bg-blue-500 text-white hover:bg-blue-600'
+                    ]"
+                  >{{ copiedRow === r ? '✅ 已复制' : '📋 一键复制' }}</button>
+                </div>
                 <pre class="whitespace-pre-wrap text-sm text-gray-700 font-sans leading-relaxed">{{ generateFullEmail(r.asin, r.title, r.quantity, r.location) }}</pre>
               </td>
             </tr>
           </template>
         </tbody>
       </table>
-    </div>
-
-    <!-- 操作按钮 -->
-    <div v-if="results.length" class="flex items-center gap-4 mb-4">
-      <button
-        @click="exportExcel"
-        class="bg-green-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-green-700 transition"
-      >
-        📥 导出Excel
-      </button>
-      <button
-        @click="clearData"
-        class="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg text-lg hover:bg-gray-300 transition"
-      >
-        清除数据
-      </button>
     </div>
 
     <!-- 说明 -->
