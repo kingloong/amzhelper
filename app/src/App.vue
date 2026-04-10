@@ -27,6 +27,7 @@ const tools = [
   { name: '批量广告上传', path: '/tools/bulk-ad-upload', icon: '📢', active: true },
   { name: '常用工具跳转', path: '/tools/quick-links', icon: '🔗', active: true },
   { name: 'PDF转链接', path: '/tools/pdf-to-link', icon: '📎', active: true },
+  { name: '临时仓邮件生成', path: '/tools/temp-warehouse-email', icon: '📧', active: true },
   { name: '利润计算器', path: '', icon: '💹', active: false },
 ]
 </script>

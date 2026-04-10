@@ -15,6 +15,7 @@ import SensitiveWordChecker from '../views/SensitiveWordChecker.vue'
 import BulkAdUpload from '../views/BulkAdUpload.vue'
 import QuickLinks from '../views/QuickLinks.vue'
 import PdfToLink from '../views/PdfToLink.vue'
+import TempWarehouseEmail from '../views/TempWarehouseEmail.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -33,6 +34,7 @@ const router = createRouter({
     { path: '/tools/bulk-ad-upload', component: BulkAdUpload },
     { path: '/tools/quick-links', component: QuickLinks },
     { path: '/tools/pdf-to-link', component: PdfToLink },
+    { path: '/tools/temp-warehouse-email', component: TempWarehouseEmail },
     { path: '/about', component: About },
   ],
 })
