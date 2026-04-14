@@ -153,8 +153,8 @@ function detectType(doc) {
   const texts = parseTextPositions(doc, page);
   const hasSingleSKU = texts.some(t => t.raw.includes('Single SKU'));
   if (hasSingleSKU) return 'box';
-  if (width >= 600 && height >= 780) return 'product';
-  if (width < 400 && height < 500) return 'box';
+  if (width >= 500 && height >= 700) return 'product';
+  if (width < 500 && height < 700) return 'box';
   return 'unknown';
 }
 
@@ -163,18 +163,32 @@ async function processProductLabel(pdfBytes) {
   const helvetica = await doc.embedFont(StandardFonts.Helvetica);
   for (const page of doc.getPages()) {
     const texts = parseTextPositions(doc, page);
-    const colStarts = [22, 222, 422];
-    const rowYs = [694, 622, 550, 478, 406, 334, 262, 190, 118, 46];
-    for (const cx of colStarts) {
-      for (const ry of rowYs) {
-        const hasContent = texts.some(t => Math.abs(t.x - cx) < 15 && Math.abs(t.y - ry) < 5);
-        if (hasContent) {
-          page.drawText('Made in China', {
-            x: cx + 55, y: ry, size: 7,
-            font: helvetica, color: rgb(0, 0, 0),
-          });
-        }
+    if (!texts.length) continue;
+
+    // 按 x 坐标分组（同一列的标签 x 相近），再在每组内找最低 y（即 "New" 那一行）
+    // 先按 y 降序排列，然后按相邻 y 差值分组识别每个标签
+    const sorted = [...texts].sort((a, b) => b.y - a.y);
+    const groups = [];
+    let current = [sorted[0]];
+    for (let i = 1; i < sorted.length; i++) {
+      const prev = current[current.length - 1];
+      // 同一个标签内的文字 y 差距 < 30，不同标签之间 > 30
+      if (Math.abs(prev.x - sorted[i].x) < 30 && prev.y - sorted[i].y < 30) {
+        current.push(sorted[i]);
+      } else {
+        groups.push(current);
+        current = [sorted[i]];
       }
+    }
+    groups.push(current);
+
+    // 每组标签：在最低 y 位置（"New" 行）的右侧添加 Made in China
+    for (const group of groups) {
+      const bottomText = group.reduce((min, t) => t.y < min.y ? t : min, group[0]);
+      page.drawText('Made in China', {
+        x: bottomText.x + 55, y: bottomText.y, size: 7,
+        font: helvetica, color: rgb(0, 0, 0),
+      });
     }
   }
   return doc.save();
