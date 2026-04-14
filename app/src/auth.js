@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 
 // 本地开发时用 3002 端口，部署后前后端同源，用空字符串
-const API_BASE = window.location.port === '5173'
+export const API_BASE = window.location.port === '5173'
   ? 'http://' + window.location.hostname + ':3002'
   : ''
 const DEVICE_ID_KEY = 'amzhelper_device_id'

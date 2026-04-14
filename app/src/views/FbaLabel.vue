@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { API_BASE } from '../auth.js'
 
 const files = ref([])
 const results = ref([])
@@ -30,7 +31,7 @@ async function process() {
   const fd = new FormData()
   files.value.forEach(f => fd.append('files', f))
   try {
-    const res = await fetch('http://localhost:3002/api/process', { method: 'POST', body: fd })
+    const res = await fetch(`${API_BASE}/api/process`, { method: 'POST', body: fd })
     const data = await res.json()
     if (!res.ok) throw new Error(data.error)
     results.value = data.results
