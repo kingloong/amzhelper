@@ -1,9 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-
-const API_BASE = window.location.port === '5173'
-  ? 'http://' + window.location.hostname + ':3002'
-  : ''
+import { API_BASE } from '../auth.js'
 
 const files = ref([])
 const uploading = ref(false)
