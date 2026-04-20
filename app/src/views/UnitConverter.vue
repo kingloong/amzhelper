@@ -88,7 +88,7 @@ const inp = 'w-full border border-gray-200 rounded-lg px-3 py-2.5 text-base focu
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div v-for="[k, label] in [['cm','厘米 cm'],['inch','英寸 inch'],['m','米 m'],['ft','英尺 ft']]" :key="k">
-            <label class="block text-sm text-gray-500 mb-1">{{ label }}</label>
+            <label class="block text-sm text-gray-700 mb-1">{{ label }}</label>
             <input v-model="len[k]" @input="onLen(k)" type="number" :class="inp" placeholder="0" />
           </div>
         </div>
@@ -100,7 +100,7 @@ const inp = 'w-full border border-gray-200 rounded-lg px-3 py-2.5 text-base focu
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div v-for="[k, label] in [['g','克 g'],['kg','公斤 kg'],['lb','磅 lb'],['oz','盎司 oz']]" :key="k">
-            <label class="block text-sm text-gray-500 mb-1">{{ label }}</label>
+            <label class="block text-sm text-gray-700 mb-1">{{ label }}</label>
             <input v-model="wt[k]" @input="onWt(k)" type="number" :class="inp" placeholder="0" />
           </div>
         </div>
@@ -116,29 +116,29 @@ const inp = 'w-full border border-gray-200 rounded-lg px-3 py-2.5 text-base focu
       <div class="space-y-4">
         <!-- cm 行 -->
         <div class="flex items-end gap-3">
-          <div class="w-28 shrink-0 text-sm text-gray-500 pb-2.5">长×宽×高 (cm)</div>
+          <div class="w-28 shrink-0 text-sm text-gray-700 pb-2.5">长×宽×高 (cm)</div>
           <div class="flex gap-2">
-            <div><label class="block text-xs text-gray-400 mb-1">长</label><input v-model="vol.lcm" type="number" class="w-28 border border-gray-200 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="0" /></div>
-            <div><label class="block text-xs text-gray-400 mb-1">宽</label><input v-model="vol.wcm" type="number" class="w-28 border border-gray-200 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="0" /></div>
-            <div><label class="block text-xs text-gray-400 mb-1">高</label><input v-model="vol.hcm" type="number" class="w-28 border border-gray-200 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="0" /></div>
+            <div><label class="block text-xs text-gray-600 mb-1">长</label><input v-model="vol.lcm" type="number" class="w-28 border border-gray-200 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="0" /></div>
+            <div><label class="block text-xs text-gray-600 mb-1">宽</label><input v-model="vol.wcm" type="number" class="w-28 border border-gray-200 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="0" /></div>
+            <div><label class="block text-xs text-gray-600 mb-1">高</label><input v-model="vol.hcm" type="number" class="w-28 border border-gray-200 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="0" /></div>
           </div>
           <div class="flex gap-3 shrink-0">
-            <div><div class="text-xs text-gray-500 mb-1">立方米 m³</div><div class="bg-blue-50 border border-blue-100 rounded-lg px-4 py-2.5 w-32 text-center text-xl font-bold text-blue-600">{{ volM3cm() }}</div></div>
-            <div><div class="text-xs text-gray-500 mb-1">立方英尺 ft³</div><div class="bg-blue-50 border border-blue-100 rounded-lg px-4 py-2.5 w-32 text-center text-xl font-bold text-blue-600">{{ volFt3cm() }}</div></div>
+            <div><div class="text-xs text-gray-700 mb-1">立方米 m³</div><div class="bg-blue-50 border border-blue-100 rounded-lg px-4 py-2.5 w-32 text-center text-xl font-bold text-blue-600">{{ volM3cm() }}</div></div>
+            <div><div class="text-xs text-gray-700 mb-1">立方英尺 ft³</div><div class="bg-blue-50 border border-blue-100 rounded-lg px-4 py-2.5 w-32 text-center text-xl font-bold text-blue-600">{{ volFt3cm() }}</div></div>
           </div>
         </div>
         <div class="border-t border-dashed border-gray-200"></div>
         <!-- inch 行 -->
         <div class="flex items-end gap-3">
-          <div class="w-28 shrink-0 text-sm text-gray-500 pb-2.5">长×宽×高 (inch)</div>
+          <div class="w-28 shrink-0 text-sm text-gray-700 pb-2.5">长×宽×高 (inch)</div>
           <div class="flex gap-2">
-            <div><label class="block text-xs text-gray-400 mb-1">长</label><input v-model="vol.linch" type="number" class="w-28 border border-gray-200 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="0" /></div>
-            <div><label class="block text-xs text-gray-400 mb-1">宽</label><input v-model="vol.winch" type="number" class="w-28 border border-gray-200 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="0" /></div>
-            <div><label class="block text-xs text-gray-400 mb-1">高</label><input v-model="vol.hinch" type="number" class="w-28 border border-gray-200 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="0" /></div>
+            <div><label class="block text-xs text-gray-600 mb-1">长</label><input v-model="vol.linch" type="number" class="w-28 border border-gray-200 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="0" /></div>
+            <div><label class="block text-xs text-gray-600 mb-1">宽</label><input v-model="vol.winch" type="number" class="w-28 border border-gray-200 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="0" /></div>
+            <div><label class="block text-xs text-gray-600 mb-1">高</label><input v-model="vol.hinch" type="number" class="w-28 border border-gray-200 rounded-lg px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="0" /></div>
           </div>
           <div class="flex gap-3 shrink-0">
-            <div><div class="text-xs text-gray-500 mb-1">立方米 m³</div><div class="bg-blue-50 border border-blue-100 rounded-lg px-4 py-2.5 w-32 text-center text-xl font-bold text-blue-600">{{ volM3inch() }}</div></div>
-            <div><div class="text-xs text-gray-500 mb-1">立方英尺 ft³</div><div class="bg-blue-50 border border-blue-100 rounded-lg px-4 py-2.5 w-32 text-center text-xl font-bold text-blue-600">{{ volFt3inch() }}</div></div>
+            <div><div class="text-xs text-gray-700 mb-1">立方米 m³</div><div class="bg-blue-50 border border-blue-100 rounded-lg px-4 py-2.5 w-32 text-center text-xl font-bold text-blue-600">{{ volM3inch() }}</div></div>
+            <div><div class="text-xs text-gray-700 mb-1">立方英尺 ft³</div><div class="bg-blue-50 border border-blue-100 rounded-lg px-4 py-2.5 w-32 text-center text-xl font-bold text-blue-600">{{ volFt3inch() }}</div></div>
           </div>
         </div>
       </div>
@@ -151,8 +151,8 @@ const inp = 'w-full border border-gray-200 rounded-lg px-3 py-2.5 text-base focu
         <button @click="resetTemp" class="text-sm text-red-400 hover:text-red-600">重置</button>
       </div>
       <div class="grid grid-cols-2 gap-4 max-w-md">
-        <div><label class="block text-sm text-gray-500 mb-1">摄氏度 ℃</label><input v-model="temp.c" @input="onTempC" type="number" :class="inp" placeholder="0" /></div>
-        <div><label class="block text-sm text-gray-500 mb-1">华氏度 ℉</label><input v-model="temp.f" @input="onTempF" type="number" :class="inp" placeholder="0" /></div>
+        <div><label class="block text-sm text-gray-700 mb-1">摄氏度 ℃</label><input v-model="temp.c" @input="onTempC" type="number" :class="inp" placeholder="0" /></div>
+        <div><label class="block text-sm text-gray-700 mb-1">华氏度 ℉</label><input v-model="temp.f" @input="onTempF" type="number" :class="inp" placeholder="0" /></div>
       </div>
     </div>
 
@@ -164,12 +164,12 @@ const inp = 'w-full border border-gray-200 rounded-lg px-3 py-2.5 text-base focu
       </div>
       <div class="space-y-4">
         <div>
-          <p class="text-sm font-medium text-gray-500 mb-3">厘米 / 公斤</p>
+          <p class="text-sm font-medium text-gray-700 mb-3">厘米 / 公斤</p>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div><label class="block text-sm text-gray-500 mb-1">长 cm</label><input v-model="box.lcm" @input="onBoxCm" type="number" :class="inp" placeholder="0" /></div>
-            <div><label class="block text-sm text-gray-500 mb-1">宽 cm</label><input v-model="box.wcm" @input="onBoxCm" type="number" :class="inp" placeholder="0" /></div>
-            <div><label class="block text-sm text-gray-500 mb-1">高 cm</label><input v-model="box.hcm" @input="onBoxCm" type="number" :class="inp" placeholder="0" /></div>
-            <div><label class="block text-sm text-gray-500 mb-1">重量 kg</label><input v-model="box.kg" @input="onBoxCm" type="number" :class="inp" placeholder="0" /></div>
+            <div><label class="block text-sm text-gray-700 mb-1">长 cm</label><input v-model="box.lcm" @input="onBoxCm" type="number" :class="inp" placeholder="0" /></div>
+            <div><label class="block text-sm text-gray-700 mb-1">宽 cm</label><input v-model="box.wcm" @input="onBoxCm" type="number" :class="inp" placeholder="0" /></div>
+            <div><label class="block text-sm text-gray-700 mb-1">高 cm</label><input v-model="box.hcm" @input="onBoxCm" type="number" :class="inp" placeholder="0" /></div>
+            <div><label class="block text-sm text-gray-700 mb-1">重量 kg</label><input v-model="box.kg" @input="onBoxCm" type="number" :class="inp" placeholder="0" /></div>
           </div>
         </div>
         <div class="flex items-center gap-3">
@@ -178,12 +178,12 @@ const inp = 'w-full border border-gray-200 rounded-lg px-3 py-2.5 text-base focu
           <div class="flex-1 border-t border-dashed border-gray-200"></div>
         </div>
         <div>
-          <p class="text-sm font-medium text-gray-500 mb-3">英寸 / 磅</p>
+          <p class="text-sm font-medium text-gray-700 mb-3">英寸 / 磅</p>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div><label class="block text-sm text-gray-500 mb-1">长 inch</label><input v-model="box.linch" @input="onBoxInch" type="number" :class="inp" placeholder="0" /></div>
-            <div><label class="block text-sm text-gray-500 mb-1">宽 inch</label><input v-model="box.winch" @input="onBoxInch" type="number" :class="inp" placeholder="0" /></div>
-            <div><label class="block text-sm text-gray-500 mb-1">高 inch</label><input v-model="box.hinch" @input="onBoxInch" type="number" :class="inp" placeholder="0" /></div>
-            <div><label class="block text-sm text-gray-500 mb-1">重量 lb</label><input v-model="box.lb" @input="onBoxInch" type="number" :class="inp" placeholder="0" /></div>
+            <div><label class="block text-sm text-gray-700 mb-1">长 inch</label><input v-model="box.linch" @input="onBoxInch" type="number" :class="inp" placeholder="0" /></div>
+            <div><label class="block text-sm text-gray-700 mb-1">宽 inch</label><input v-model="box.winch" @input="onBoxInch" type="number" :class="inp" placeholder="0" /></div>
+            <div><label class="block text-sm text-gray-700 mb-1">高 inch</label><input v-model="box.hinch" @input="onBoxInch" type="number" :class="inp" placeholder="0" /></div>
+            <div><label class="block text-sm text-gray-700 mb-1">重量 lb</label><input v-model="box.lb" @input="onBoxInch" type="number" :class="inp" placeholder="0" /></div>
           </div>
         </div>
         <div class="border-t border-gray-100 pt-4">

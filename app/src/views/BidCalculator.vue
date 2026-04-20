@@ -37,7 +37,7 @@ const right = reactive({
 const rightResults = computed(() =>
   right.rows.map((r, i) => {
     const coeff = getCoeff(right.strategy, placements[i])
-    const pct = right.baseCpc > 0 ? +((r.targetCpc / right.baseCpc / coeff - 1) * 100).toFixed(1) : 0
+    const pct = right.baseCpc > 0 ? Math.round((r.targetCpc / right.baseCpc / coeff - 1) * 100) : 0
     const budget = r.cvr > 0 ? +(r.targetCpc / (r.cvr / 100)).toFixed(2) : 0
     return { pct, budget }
   })
