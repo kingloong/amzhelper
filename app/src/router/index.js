@@ -16,6 +16,7 @@ import BulkAdUpload from '../views/BulkAdUpload.vue'
 import QuickLinks from '../views/QuickLinks.vue'
 import PdfToLink from '../views/PdfToLink.vue'
 import TempWarehouseEmail from '../views/TempWarehouseEmail.vue'
+import Invoice from '../views/Invoice.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -35,6 +36,7 @@ const router = createRouter({
     { path: '/tools/quick-links', component: QuickLinks },
     { path: '/tools/pdf-to-link', component: PdfToLink },
     { path: '/tools/temp-warehouse-email', component: TempWarehouseEmail },
+    { path: '/tools/invoice', component: Invoice },
     { path: '/about', component: About },
   ],
 })

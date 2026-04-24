@@ -51,6 +51,12 @@
         <h2 class="font-semibold text-lg mb-1">敏感词检查</h2>
         <p class="text-sm text-gray-500">比对文案与敏感词列表，高亮命中的词条和文案片段。</p>
       </router-link>
+      <router-link to="/tools/invoice"
+        class="block p-6 bg-white rounded-lg shadow hover:shadow-md transition border border-gray-100">
+        <div class="text-2xl mb-2">🧾</div>
+        <h2 class="font-semibold text-lg mb-1">订单形式发票</h2>
+        <p class="text-sm text-gray-500">生成亚马逊订单的PDF发票，支持多语言。</p>
+      </router-link>
       <div class="block p-6 bg-white rounded-lg shadow border border-gray-100 opacity-50 cursor-not-allowed">
         <div class="text-2xl mb-2">💹</div>
         <h2 class="font-semibold text-lg mb-1">利润计算器</h2>
